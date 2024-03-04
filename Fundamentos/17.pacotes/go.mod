@@ -1,4 +1,4 @@
-module github.com/victor-bologna/curso-go-expert
+module github.com/victor-bologna/pos-curso-go-expert
 
 go 1.22.0
 

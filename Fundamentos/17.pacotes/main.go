@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/google/uuid"
-	"github.com/victor-bologna/curso-go-expert/matematica"
+	"github.com/victor-bologna/pos-curso-go-expert/matematica"
 )
 
 func main() {

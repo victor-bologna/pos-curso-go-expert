@@ -1,4 +1,4 @@
-module github.com/victor-bologna/curso-go-expert/banco-de-dados/3
+module github.com/victor-bologna/pos-curso-go-expert/banco-de-dados/3
 
 go 1.22.0
 
