@@ -1,0 +1,19 @@
+{{ template "header.html" }}
+    <h1>Cursos por carga horária</h1>
+    <table>
+        <thead>
+            <tr>Nome</tr>
+            <tr>Horas</tr>
+        </thead>
+        <tbody>
+            {{ range .}}
+                {{ if gt .CargaHoraria 200}}
+                <tr>
+                    <td>Nome: {{ .Nome }}</td>
+                    <td>Carga Horária: {{ .CargaHoraria }}</td>
+                </tr>
+                {{ end }}
+            {{ end }}
+        </tbody>
+    </table>
+{{ template "footer.html" }}

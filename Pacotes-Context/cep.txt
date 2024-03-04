@@ -1,0 +1,6 @@
+CEP: 03502-050
+Logradouro: Rua Júlio Colaço
+Complemento: de 333/334 a 600/601
+Bairro: Chácara Califórnia
+Cidade: São Paulo
+UF: SP
