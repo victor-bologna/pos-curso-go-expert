@@ -13,7 +13,7 @@ func NewUserDB(db *gorm.DB) *UserDB {
 	return &UserDB{DB: db}
 }
 
-func (u *UserDB) CreateUser(user *entity.User) error {
+func (u *UserDB) Create(user *entity.User) error {
 	return u.DB.Create(user).Error
 }
 

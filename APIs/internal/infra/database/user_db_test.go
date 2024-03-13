@@ -27,7 +27,7 @@ func TestCreateUser(t *testing.T) {
 	assert.NoError(t, err)
 	userDB := NewUserDB(db)
 
-	err = userDB.CreateUser(user)
+	err = userDB.Create(user)
 	assert.NoError(t, err)
 
 	var userResult entity.User
@@ -45,8 +45,7 @@ func TestFindByEmail(t *testing.T) {
 	assert.NoError(t, err)
 	userDB := NewUserDB(db)
 
-	err = userDB.CreateUser(user)
-	assert.NoError(t, err)
+	db.Save(&user)
 
 	userResult, err := userDB.FindByEmail("joao@gmail.com")
 	assert.NoError(t, err)
