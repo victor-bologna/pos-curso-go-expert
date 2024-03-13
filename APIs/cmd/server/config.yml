@@ -1,0 +1,12 @@
+DB:
+  DRIVER: mysql
+  HOST: localhost
+  PORT: 3306
+  USER: root
+  PASSWORD: owowhatsdis
+  NAME: goexpert
+API:
+  PORT: 8000
+JWT:
+  SECRET: secret
+  EXPIRESIN: 300
