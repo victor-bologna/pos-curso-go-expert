@@ -3,6 +3,8 @@ module github.com/victor-bologna/pos-curso-go-expert-apis
 go 1.22.0
 
 require (
+	github.com/glebarez/sqlite v1.10.0
+	github.com/go-chi/chi/v5 v5.0.12
 	github.com/go-chi/jwtauth v1.2.0
 	github.com/google/uuid v1.4.0
 	github.com/spf13/viper v1.18.2
@@ -11,7 +13,17 @@ require (
 	gorm.io/gorm v1.25.7
 )
 
-require github.com/mattn/go-sqlite3 v1.14.17 // indirect
+require (
+	github.com/dustin/go-humanize v1.0.1 // indirect
+	github.com/glebarez/go-sqlite v1.21.2 // indirect
+	github.com/mattn/go-isatty v0.0.17 // indirect
+	github.com/mattn/go-sqlite3 v1.14.22 // indirect
+	github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec // indirect
+	modernc.org/libc v1.22.5 // indirect
+	modernc.org/mathutil v1.5.0 // indirect
+	modernc.org/memory v1.5.0 // indirect
+	modernc.org/sqlite v1.23.1 // indirect
+)
 
 require (
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect

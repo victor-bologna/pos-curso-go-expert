@@ -5,45 +5,44 @@ import (
 	"github.com/spf13/viper"
 )
 
-var cfg *conf
+var cfg *Conf
 
-type conf struct {
-	dbConfig
-	apiConfig
-	jwtConfig
+type Conf struct {
+	DbConfig  `mapstructure:"DB"`
+	ApiConfig `mapstructure:"API"`
+	JwtConfig `mapstructure:"JWT"`
 }
 
-type dbConfig struct {
-	Driver   string `mapstructure:"DB_DRIVER"`
-	Host     string `mapstructure:"DB_HOST"`
-	Port     string `mapstructure:"DB_PORT"`
-	User     string `mapstructure:"DB_USER"`
-	Password string `mapstructure:"DB_PASSWORD"`
-	Name     string `mapstructure:"DB_NAME"`
+type DbConfig struct {
+	Driver   string `mapstructure:"DRIVER"`
+	Host     string `mapstructure:"HOST"`
+	Port     string `mapstructure:"PORT"`
+	User     string `mapstructure:"USER"`
+	Password string `mapstructure:"PASSWORD"`
+	Name     string `mapstructure:"NAME"`
 }
 
-type apiConfig struct {
-	APIPort string `mapstructure:"API_PORT"`
+type ApiConfig struct {
+	APIPort string `mapstructure:"PORT"`
 }
 
-type jwtConfig struct {
-	Secret    string `mapstructure:"JWT_SECRET"`
-	ExpiresIn int    `mapstructure:"JWT_EXPIRESIN"`
-	TokenAuth *jwtauth.JWTAuth
+type JwtConfig struct {
+	Secret    string `mapstructure:"SECRET"`
+	ExpiresIn int    `mapstructure:"EXPIRESIN"`
+	JWTAuth   *jwtauth.JWTAuth
 }
 
-func LoadConfig(path string) *conf {
-	viper.SetConfigName("app_config")
-	viper.SetConfigType("env")
+func LoadConfig(path string) *Conf {
+	viper.SetConfigName("config")
 	viper.AddConfigPath(path)
-	viper.SetConfigFile(".env")
 	viper.AutomaticEnv()
 	if err := viper.ReadInConfig(); err != nil {
 		panic(err)
 	}
+
 	if err := viper.Unmarshal(&cfg); err != nil {
 		panic(err)
 	}
-	cfg.TokenAuth = jwtauth.New("H256", []byte(cfg.Secret), nil)
+	cfg.JwtConfig.JWTAuth = jwtauth.New("HS256", []byte(cfg.JwtConfig.Secret), nil)
 	return cfg
 }
