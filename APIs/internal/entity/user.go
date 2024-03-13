@@ -1,15 +1,15 @@
 package entity
 
 import (
-	"github.com/victor-bologna/pos-curso-go-expert-apis/pkg/entity"
+	"github.com/victor-bologna/pos-curso-go-expert-apis/pkg/property"
 	"golang.org/x/crypto/bcrypt"
 )
 
 type User struct {
-	ID       entity.ID `json:"id"`
-	Name     string    `json:"name"`
-	Email    string    `json:"email"`
-	Password string    `json:"-"`
+	ID       property.ID `json:"id"`
+	Name     string      `json:"name"`
+	Email    string      `json:"email"`
+	Password string      `json:"-"`
 }
 
 func NewUser(name, email, password string) (*User, error) {
@@ -18,7 +18,7 @@ func NewUser(name, email, password string) (*User, error) {
 		return nil, err
 	}
 	return &User{
-		ID:       entity.NewUUID(),
+		ID:       property.NewUUID(),
 		Name:     name,
 		Email:    email,
 		Password: string(hash),

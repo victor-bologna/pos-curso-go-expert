@@ -4,7 +4,7 @@ import (
 	"errors"
 	"time"
 
-	"github.com/victor-bologna/pos-curso-go-expert-apis/pkg/entity"
+	"github.com/victor-bologna/pos-curso-go-expert-apis/pkg/property"
 )
 
 var (
@@ -16,7 +16,7 @@ var (
 )
 
 type Product struct {
-	ID        entity.ID
+	ID        property.ID
 	Name      string
 	Price     float64
 	CreatedAt time.Time
@@ -24,7 +24,7 @@ type Product struct {
 
 func NewProduct(name string, price float64) (*Product, error) {
 	product := &Product{
-		ID:        entity.NewUUID(),
+		ID:        property.NewUUID(),
 		Name:      name,
 		Price:     price,
 		CreatedAt: time.Now(),
@@ -40,7 +40,7 @@ func (p *Product) Validate() error {
 	if p.ID.String() == "" {
 		return ErrProductIDRequired
 	}
-	if _, err := entity.ParseID(p.ID.String()); err != nil {
+	if _, err := property.ParseID(p.ID.String()); err != nil {
 		return ErrProductIDInvalid
 	}
 	if p.Name == "" {
