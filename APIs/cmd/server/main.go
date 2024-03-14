@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/glebarez/sqlite"
@@ -27,10 +28,17 @@ func main() {
 	productHandler := handlers.NewProductHandler(productDB)
 
 	userDB := database.NewUserDB(db)
-	userHandler := handlers.NewUserHandler(userDB, config.JWTAuth, config.ExpiresIn)
+	// userHandler := handlers.NewUserHandler(userDB, config.JWTAuth, config.ExpiresIn) // -> Passa coisas do JWT para  Handler
+	userHandler := handlers.NewUserHandler(userDB)
 
 	r := chi.NewRouter()
-	r.Use(middleware.Logger)
+	r.Use(middleware.Logger)    // Chi Middleware
+	r.Use(LogHandler)           // Custom Middleware
+	r.Use(middleware.Recoverer) // Evita de cair o servidor caso algum erro intero aconteça.
+
+	// Ou Passar coisas do JWT pelo middleware (Context) (Chave valor)
+	r.Use(middleware.WithValue("Jwt", config.JWTAuth))
+	r.Use(middleware.WithValue("JwtExpiresIn", config.ExpiresIn))
 
 	r.Route("/products", func(r chi.Router) { // Mesma coisa que o RequestMapping do Controller do Spring.
 		r.Use(jwtauth.Verifier(config.JWTAuth)) // (Middleware) Pega o token enviado e injeta o config.JWTAuth no contexto do chi.
@@ -46,4 +54,11 @@ func main() {
 	r.Post("/users", userHandler.CreateUser)
 	r.Post("/users/generate_token", userHandler.GenerateToken)
 	http.ListenAndServe(":8000", r)
+}
+
+func LogHandler(next http.Handler) http.Handler { // Custom Middleware
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		log.Println(r.Method, r.URL.Path)
+		next.ServeHTTP(w, r)
+	})
 }
