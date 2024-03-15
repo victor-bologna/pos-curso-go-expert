@@ -41,6 +41,9 @@ func (p *ProductDB) Update(product *entity.Product) error {
 	if _, err := p.FindByID(product.ID.String()); err != nil {
 		return err
 	}
+	if err := product.Validate(); err != nil {
+		return err
+	}
 	return p.DB.Save(product).Error
 }
 

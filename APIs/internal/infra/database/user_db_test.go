@@ -3,9 +3,9 @@ package database
 import (
 	"testing"
 
+	"github.com/glebarez/sqlite"
 	"github.com/stretchr/testify/assert"
 	"github.com/victor-bologna/pos-curso-go-expert-apis/internal/entity"
-	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
 

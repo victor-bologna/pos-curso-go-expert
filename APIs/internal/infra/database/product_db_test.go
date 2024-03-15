@@ -5,15 +5,16 @@ import (
 	"math/rand"
 	"testing"
 
+	"github.com/glebarez/sqlite"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 	"github.com/victor-bologna/pos-curso-go-expert-apis/internal/entity"
-	"gorm.io/driver/sqlite"
+	"github.com/victor-bologna/pos-curso-go-expert-apis/pkg/property"
 	"gorm.io/gorm"
 )
 
 func openProductDB(t *testing.T) *gorm.DB {
-	db, err := gorm.Open(sqlite.Open("file::memory:"), &gorm.Config{})
+	db, err := gorm.Open(sqlite.Open(":memory:"), &gorm.Config{})
 	if err != nil {
 		t.Error(err)
 	}
@@ -109,19 +110,53 @@ func TestProductUpdate(t *testing.T) {
 	var product2 entity.Product
 	err = productDB.DB.Where("ID = ?", product.ID.String()).First(&product2).Error
 	assert.NoError(t, err)
-	assert.Equal(t, 40.50, product2.Price)
+	assert.Equal(t, product.Price, product2.Price)
 }
 
 func TestProductUpdate_NotFound(t *testing.T) {
 	db := openProductDB(t)
 	product, err := entity.NewProduct("Test", 15.23)
 	assert.NoError(t, err)
+	db.Create(product)
+	product.ID, _ = property.ParseID("")
 
 	productDB := NewProductDB(db)
 
 	err = productDB.Update(product)
 	assert.Error(t, err)
+	assert.EqualError(t, err, "record not found")
+}
 
+func TestProductUpdate_PriceZero(t *testing.T) {
+	db := openProductDB(t)
+	product, err := entity.NewProduct("Test", 15.23)
+	assert.NoError(t, err)
+	db.Create(product)
+
+	err = db.Where("id = ?", product.ID).Find(&product).Error
+	assert.NoError(t, err)
+	productDB := NewProductDB(db)
+
+	product.Price = 0
+	err = productDB.Update(product)
+	assert.Error(t, err)
+	assert.EqualError(t, err, entity.ErrProductPriceRequired.Error())
+}
+
+func TestProductUpdate_PriceInvalid(t *testing.T) {
+	db := openProductDB(t)
+	product, err := entity.NewProduct("Test", 15.23)
+	assert.NoError(t, err)
+	db.Create(product)
+
+	err = db.Where("id = ?", product.ID).Find(&product).Error
+	assert.NoError(t, err)
+	productDB := NewProductDB(db)
+
+	product.Price = -10
+	err = productDB.Update(product)
+	assert.Error(t, err)
+	assert.EqualError(t, err, entity.ErrProductPriceInvalid.Error())
 }
 
 func TestProductDeleteByID(t *testing.T) {
