@@ -15,3 +15,7 @@ type GenerateTokenDTO struct {
 	Email    string `json:"email"`
 	Password string `json:"password"`
 }
+
+type JWTString struct {
+	AccessToken string `json:"access_token"`
+}

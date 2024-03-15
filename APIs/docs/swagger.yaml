@@ -1,0 +1,297 @@
+basePath: /
+definitions:
+  dto.GenerateTokenDTO:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  dto.JWTString:
+    properties:
+      access_token:
+        type: string
+    type: object
+  dto.ProductDTO:
+    properties:
+      name:
+        type: string
+      price:
+        type: number
+    type: object
+  dto.UserDTO:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+    type: object
+  entity.Product:
+    properties:
+      createdAt:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      price:
+        type: number
+    type: object
+  httputil.Error:
+    properties:
+      message:
+        type: string
+    type: object
+host: localhost:8000
+info:
+  contact:
+    email: victorbologna@hotmail.com
+    name: Victor Barros Bologna
+    url: https://linkedin.com/in/victor-bologna
+  description: Product API with user autentication via JWT.
+  termsOfService: http://swagger.io/terms
+  title: Pós Curso Go Expert API
+  version: "1.0"
+paths:
+  /products/:
+    get:
+      consumes:
+      - application/json
+      description: Find all products.
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: string
+      - description: Limit per page
+        in: query
+        name: limit
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entity.Product'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httputil.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Find Products
+      tags:
+      - Products
+    post:
+      consumes:
+      - application/json
+      description: Generate an Product.
+      parameters:
+      - description: Product information
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ProductDTO'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httputil.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Create Product
+      tags:
+      - Products
+  /products/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete product by ID.
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httputil.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httputil.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete Products
+      tags:
+      - Products
+    get:
+      consumes:
+      - application/json
+      description: Find Product by ID.
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.Product'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httputil.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httputil.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Find Product
+      tags:
+      - Products
+    put:
+      consumes:
+      - application/json
+      description: Update product by ID.
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Product information to be updated.
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ProductDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.Product'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httputil.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httputil.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: Update Product
+      tags:
+      - Products
+  /users:
+    post:
+      consumes:
+      - application/json
+      description: Create a new user.
+      parameters:
+      - description: User request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UserDTO'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httputil.Error'
+      summary: Create User
+      tags:
+      - Users
+  /users/generate_token:
+    post:
+      consumes:
+      - application/json
+      description: Generate an JWT based on user.
+      parameters:
+      - description: User credentials
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.GenerateTokenDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.JWTString'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.Error'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/httputil.Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httputil.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httputil.Error'
+      summary: Generate JWT
+      tags:
+      - Users
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
