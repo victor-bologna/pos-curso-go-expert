@@ -59,7 +59,7 @@ func (u *UserHandler) GenerateToken(w http.ResponseWriter, r *http.Request) {
 
 	if !user.ValidatePassword(generateTokenDTO.Password) {
 		w.WriteHeader(http.StatusUnauthorized)
-		err := httputil.Error{Message: err.Error()}
+		err := httputil.Error{Message: "user not found."}
 		json.NewEncoder(w).Encode(err)
 		return
 	}
