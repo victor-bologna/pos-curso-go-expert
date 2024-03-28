@@ -1,0 +1,3 @@
+[submodule "Desafios/Client-Server-API"]
+	path = Desafios/Client-Server-API
+	url = https://github.com/victor-bologna/pos-curso-go-expert-desafio-client-server-api
