@@ -4,3 +4,6 @@
 [submodule "Desafios/Multithreading"]
 	path = Desafios/Multithreading
 	url = https://github.com/victor-bologna/pos-curso-go-expert-desafio-multithreading
+[submodule "Modulos-Privados"]
+	path = Modulos-Privados
+	url = https://github.com/victor-bologna/pos-curso-go-expert-secret-module
