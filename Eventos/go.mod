@@ -5,6 +5,7 @@ go 1.22.0
 require (
 	github.com/rabbitmq/amqp091-go v1.9.0
 	github.com/stretchr/testify v1.9.0
+	github.com/victor-bologna/pos-curso-go-expert-secret-module v0.0.0-20240405151446-ff1336c46bcb
 )
 
 require (
