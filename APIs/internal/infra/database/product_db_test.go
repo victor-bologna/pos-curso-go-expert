@@ -1,20 +1,21 @@
 package database
 
 import (
+	"database/sql"
 	"fmt"
 	"math/rand"
 	"testing"
 
-	"github.com/glebarez/sqlite"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 	"github.com/victor-bologna/pos-curso-go-expert-apis/internal/entity"
 	"github.com/victor-bologna/pos-curso-go-expert-apis/pkg/property"
 	"gorm.io/gorm"
+	_ "modernc.org/sqlite"
 )
 
 func openProductDB(t *testing.T) *gorm.DB {
-	db, err := gorm.Open(sqlite.Open(":memory:"), &gorm.Config{})
+	db, err := sql.Open("sqlite", "./data.db")
 	if err != nil {
 		t.Error(err)
 	}
