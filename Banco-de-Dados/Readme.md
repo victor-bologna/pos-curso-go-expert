@@ -12,4 +12,4 @@ GORM (Go Object Relational Mapper) é uma biblioteca a parte que gerencia a inje
 
 SQLX é uma extensão do pacote database do Go (superset) com objetivo de deixar injeção SQL menos verboso assim como GORM, porém sem usar todo o framework ORM.
 
-[SQLX](https://github.com/jmoiron/sqlx)
+[SQLX](https://github.com/jmoiron/sqlx) 
