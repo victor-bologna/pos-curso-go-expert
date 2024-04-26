@@ -1,0 +1,24 @@
+# Usa arquivos Go para construir o app
+FROM golang:latest as builder
+
+WORKDIR /app
+
+# Copiar tudo da pasta atual para a pasta atual do container (/app)
+COPY . .
+
+# Rodar o comando go build no container
+# -ldflags  enviar outras flags para o linker. Linker é o programa responsável por “linkar” os pedaços do código 
+# fonte que foram compilados, na versão final do binário que será gerado.
+# -w -> Remove DWARF (Profile debugging)
+# -s -> Remove outros simbolos incluindo informações de profile
+# CGO_ENABLED=0 Remove bibliotecas do C no build.
+RUN GOOS=linux CGO_ENABLED=0 go build -ldflags="-w -s" -o server .
+
+# Cria uma imagem docker deixando mais leve o possível
+FROM scratch
+
+# Copia o conteudo de builder (app gerado) para a nova imagem vazia
+COPY --from=builder /app/server .
+
+# Roda a aplicação construida
+CMD [ "./server" ]

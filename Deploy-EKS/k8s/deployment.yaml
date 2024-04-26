@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: server
+  template:
+    metadata:
+      labels:
+        app: server
+    spec:
+      containers:
+      - name: server
+        image: deploy-eks:latest
+        imagePullPolicy: Never
+        resources:
+          limits:
+            memory: "32Mi"
+            cpu: "100m"
+        #startup probe
+        startupProbe: # Verifica o status do servidor na url e porta especificada ao rodar
+          httpGet:
+            path: /
+            port: 8080 
+          periodSeconds: 10 # Checa a cada 10 segundos
+          failureThreshold: 10 # Se falhar 10 vezes para de enviar requisição
+        readinessProbe: # Se o server não estiver pronto o service não envia para o pod.
+          httpGet:
+            path: /
+            port: 8080 
+          periodSeconds: 10 # Checa a cada 10 segundos
+          failureThreshold: 2 # Se falhar 2 vezes para de enviar requisição
+          timeoutSeconds: 5 # Reset do timer do failure
+        livenessProbe: # Re cria o prod se não estiver funcionando
+          httpGet:
+            path: /
+            port: 8080 
+          periodSeconds: 10 # Checa a cada 10 segundos
+          failureThreshold: 3 # Se falhar 3 vezes para de enviar requisição
+          successThreshold: 1 # Recomeça a contagem caso de sucesso
+          timeoutSeconds: 5 # Reset do timer do failure
+        ports:
+        - containerPort: 8080
