@@ -2,6 +2,8 @@
 
 Repositório referente a todo o desenvolvimento e desafios feitos durante a realização do curso. Todos os modulos estão separados e classificados por categorias.
 
+[Estrutura de layout de projeto](https://github.com/golang-standards/project-layout/tree/master/internal)
+
 ## Viper
 
 [Viper](https://github.com/spf13/viper) é uma biblioteca Go que auxilia o desenvolvedor a ler e aplicar configurações de ambiente da aplicação.
