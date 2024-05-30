@@ -10,3 +10,6 @@
 [submodule "Desafios/Clean-Architecture"]
 	path = Desafios/Clean-Architecture
 	url = https://github.com/victor-bologna/pos-curso-go-expert-desafio-clean-architecture
+[submodule "Desafios/Cloud-Run"]
+	path = Desafios/Cloud-Run
+	url = https://github.com/victor-bologna/pos-curso-go-expert-desafio-cloud-run
