@@ -13,3 +13,6 @@
 [submodule "Desafios/Cloud-Run"]
 	path = Desafios/Cloud-Run
 	url = https://github.com/victor-bologna/pos-curso-go-expert-desafio-cloud-run
+[submodule "Desafios/Open-Telemetry"]
+	path = Desafios/Open-Telemetry
+	url = https://github.com/victor-bologna/pos-curso-go-expert-desafio-open-telemetry
