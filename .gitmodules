@@ -16,3 +16,6 @@
 [submodule "Desafios/Open-Telemetry"]
 	path = Desafios/Open-Telemetry
 	url = https://github.com/victor-bologna/pos-curso-go-expert-desafio-open-telemetry
+[submodule "Desafios/labs-auction-goexpert"]
+	path = Desafios/labs-auction-goexpert
+	url = https://github.com/victor-bologna/pos-curso-go-expert-desafio-leilao
