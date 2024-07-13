@@ -19,3 +19,6 @@
 [submodule "Desafios/labs-auction-goexpert"]
 	path = Desafios/labs-auction-goexpert
 	url = https://github.com/victor-bologna/pos-curso-go-expert-desafio-leilao
+[submodule "Desafios/Rate-Limiter"]
+	path = Desafios/Rate-Limiter
+	url = https://github.com/victor-bologna/pos-curso-go-expert-desafio-rate-limiter
